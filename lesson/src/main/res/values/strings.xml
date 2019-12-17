@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">微课堂</string>
+    
+    <!--Home-->
+    <string name="home_find">发现课程</string>
+    <string name="home_mine">我的课程</string>
+    <string name="home_account">我的账户</string>
+</resources>

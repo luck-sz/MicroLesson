@@ -1,0 +1,2 @@
+include ':lesson'
+rootProject.name='MicroLesson'
