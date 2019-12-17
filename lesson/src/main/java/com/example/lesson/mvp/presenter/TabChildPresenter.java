@@ -11,17 +11,14 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 
 import javax.inject.Inject;
 
-import com.example.lesson.mvp.contract.HomeContract;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.lesson.mvp.contract.TabChildContract;
 
 
 /**
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 12/17/2019 10:22
+ * Created by MVPArmsTemplate on 12/17/2019 11:41
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -30,7 +27,7 @@ import java.util.List;
  * ================================================
  */
 @FragmentScope
-public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContract.View> {
+public class TabChildPresenter extends BasePresenter<TabChildContract.Model, TabChildContract.View> {
     @Inject
     RxErrorHandler mErrorHandler;
     @Inject
@@ -39,10 +36,9 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
     ImageLoader mImageLoader;
     @Inject
     AppManager mAppManager;
-    List<String> list;
 
     @Inject
-    public HomePresenter(HomeContract.Model model, HomeContract.View rootView) {
+    public TabChildPresenter(TabChildContract.Model model, TabChildContract.View rootView) {
         super(model, rootView);
     }
 
@@ -53,17 +49,5 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
         this.mAppManager = null;
         this.mImageLoader = null;
         this.mApplication = null;
-    }
-
-    public void setTab() {
-        list = new ArrayList<>();
-        list.add("精选");
-        list.add("语文");
-        list.add("数学");
-        list.add("英语");
-        list.add("物理");
-        list.add("化学");
-        list.add("生物");
-        mRootView.setTabTitle(list);
     }
 }

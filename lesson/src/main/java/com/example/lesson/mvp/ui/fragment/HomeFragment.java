@@ -2,24 +2,30 @@ package com.example.lesson.mvp.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.lesson.R;
 import com.example.lesson.app.base.MySupportFragment;
-import com.jess.arms.base.BaseFragment;
-import com.jess.arms.di.component.AppComponent;
-import com.jess.arms.utils.ArmsUtils;
-
 import com.example.lesson.di.component.DaggerHomeComponent;
 import com.example.lesson.mvp.contract.HomeContract;
 import com.example.lesson.mvp.presenter.HomePresenter;
+import com.example.lesson.mvp.ui.adapter.TabAdapter;
+import com.flyco.tablayout.SlidingTabLayout;
+import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.utils.ArmsUtils;
 
-import com.example.lesson.R;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -37,6 +43,13 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * ================================================
  */
 public class HomeFragment extends MySupportFragment<HomePresenter> implements HomeContract.View {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.tab_home)
+    SlidingTabLayout tabHome;
+    @BindView(R.id.vp_content)
+    ViewPager vpContent;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -60,10 +73,11 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-
+        initToolBar();
+        mPresenter.setTab();
     }
 
-   @Override
+    @Override
     public void setData(@Nullable Object data) {
 
     }
@@ -93,5 +107,20 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     @Override
     public void killMyself() {
 
+    }
+
+    private void initToolBar() {
+    }
+
+    @Override
+    public void setTabTitle(List<String> title) {
+        TabAdapter adapter = new TabAdapter(getChildFragmentManager());
+        for (int i = 0; i < title.size(); i++) {
+            adapter.addFragment(TabChildFragment.newInstance(), title.get(i));
+        }
+        vpContent.setAdapter(adapter);
+        tabHome.setViewPager(vpContent);
+        // 设置tab选项卡的默认选项
+        tabHome.setCurrentTab(0);
     }
 }
