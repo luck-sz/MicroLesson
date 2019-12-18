@@ -4,4 +4,10 @@
     <color name="colorPrimaryDark">#3FA862</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
+    
+    <!--Category-->
+    <color name="selectColor">#0CB65B</color>
+    <color name="unSelectColor">#373C40</color>
+    <color name="background">#FDFDFD</color>
+    
 </resources>

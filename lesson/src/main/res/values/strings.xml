@@ -7,4 +7,6 @@
     <string name="home_find">发现课程</string>
     <string name="home_mine">我的课程</string>
     <string name="home_account">我的账户</string>
+    <!--category-->
+    <string name="category_close">关闭</string>
 </resources>

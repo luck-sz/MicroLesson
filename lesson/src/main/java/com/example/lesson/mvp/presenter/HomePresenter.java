@@ -2,16 +2,22 @@ package com.example.lesson.mvp.presenter;
 
 import android.app.Application;
 
+import com.example.lesson.app.data.entity.CategoryBean;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import timber.log.Timber;
 
 import javax.inject.Inject;
 
 import com.example.lesson.mvp.contract.HomeContract;
+import com.jess.arms.utils.RxLifecycleUtils;
 
 import java.util.ArrayList;
 import java.util.List;

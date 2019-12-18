@@ -15,6 +15,7 @@ import com.example.lesson.app.base.MySupportFragment;
 import com.example.lesson.di.component.DaggerHomeComponent;
 import com.example.lesson.mvp.contract.HomeContract;
 import com.example.lesson.mvp.presenter.HomePresenter;
+import com.example.lesson.mvp.ui.activity.CategoryActivity;
 import com.example.lesson.mvp.ui.adapter.TabAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.jess.arms.di.component.AppComponent;
@@ -24,8 +25,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
-import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -50,6 +51,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     SlidingTabLayout tabHome;
     @BindView(R.id.vp_content)
     ViewPager vpContent;
+    Unbinder unbinder;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -122,5 +124,11 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
         tabHome.setViewPager(vpContent);
         // 设置tab选项卡的默认选项
         tabHome.setCurrentTab(0);
+    }
+
+    @OnClick(R.id.toolbar_text)
+    public void onViewClicked() {
+        Intent intent = new Intent(_mActivity, CategoryActivity.class);
+        launchActivity(intent);
     }
 }

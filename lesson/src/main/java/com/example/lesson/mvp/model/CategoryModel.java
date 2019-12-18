@@ -8,11 +8,11 @@ import com.google.gson.Gson;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 
-import com.jess.arms.di.scope.FragmentScope;
+import com.jess.arms.di.scope.ActivityScope;
 
 import javax.inject.Inject;
 
-import com.example.lesson.mvp.contract.HomeContract;
+import com.example.lesson.mvp.contract.CategoryContract;
 
 import io.reactivex.Observable;
 
@@ -21,7 +21,7 @@ import io.reactivex.Observable;
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 12/17/2019 10:22
+ * Created by MVPArmsTemplate on 12/18/2019 11:12
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -29,15 +29,15 @@ import io.reactivex.Observable;
  * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
  * ================================================
  */
-@FragmentScope
-public class HomeModel extends BaseModel implements HomeContract.Model {
+@ActivityScope
+public class CategoryModel extends BaseModel implements CategoryContract.Model {
     @Inject
     Gson mGson;
     @Inject
     Application mApplication;
 
     @Inject
-    public HomeModel(IRepositoryManager repositoryManager) {
+    public CategoryModel(IRepositoryManager repositoryManager) {
         super(repositoryManager);
     }
 
@@ -46,5 +46,11 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public Observable<CategoryBean> getCategory() {
+        return mRepositoryManager.obtainRetrofitService(ApiService.class)
+                .getCategory();
     }
 }
