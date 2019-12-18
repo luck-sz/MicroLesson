@@ -3,6 +3,8 @@ package com.example.lesson.mvp.presenter;
 import android.app.Application;
 
 import com.example.lesson.app.data.entity.CategoryBean;
+import com.example.lesson.app.data.entity.RecommendBean;
+import com.example.lesson.app.data.entity.TagSuccessBean;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.mvp.BasePresenter;
@@ -59,6 +61,30 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
         this.mAppManager = null;
         this.mImageLoader = null;
         this.mApplication = null;
+    }
+
+    public void changeState(List<Integer> list) {
+        mModel.changeState(list)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<TagSuccessBean>(mErrorHandler) {
+                    @Override
+                    public void onNext(TagSuccessBean tagSuccessBean) {
+                        if (tagSuccessBean.getCode().equals("200")) {
+                            mModel.getCommend()
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                                    .subscribe(new ErrorHandleSubscriber<RecommendBean>(mErrorHandler) {
+                                        @Override
+                                        public void onNext(RecommendBean recommendBean) {
+
+                                        }
+                                    });
+                        }
+                    }
+                });
     }
 
     public void setTab() {

@@ -84,7 +84,7 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
                     @Override
                     public void onNext(CategoryBean categoryBean) {
                         bean = categoryBean.getData().getStages();
-                        mRootView.setTagAdapter(bean.get_$382633109().getSubTags());
+                        mRootView.setTagAdapter(bean.get_$382633109().getSubTags(),1276);
                         setLeftAdapter(bean.get_$154271985().getSubTags());
                     }
                 });
@@ -101,24 +101,25 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 categoryLeftAdapter.idx = position;
                 categoryLeftAdapter.notifyDataSetChanged();
+                int leftId = subTags.get(position).getTagId();
                 switch (position) {
                     case 0:
-                        mRootView.setTagAdapter(bean.get_$382633109().getSubTags());
+                        mRootView.setTagAdapter(bean.get_$382633109().getSubTags(), leftId);
                         break;
                     case 1:
-                        mRootView.setTagAdapter(bean.get_$1773877388().getSubTags());
+                        mRootView.setTagAdapter(bean.get_$1773877388().getSubTags(), leftId);
                         break;
                     case 2:
-                        mRootView.setTagAdapter(bean.get_$1003657994().getSubTags());
+                        mRootView.setTagAdapter(bean.get_$1003657994().getSubTags(), leftId);
                         break;
                     case 3:
-                        mRootView.setTagAdapter(bean.get_$842753927().getSubTags());
+                        mRootView.setTagAdapter(bean.get_$842753927().getSubTags(), leftId);
                         break;
                     case 4:
-                        mRootView.setTagAdapter(bean.get_$340228195().getSubTags());
+                        mRootView.setTagAdapter(bean.get_$340228195().getSubTags(), leftId);
                         break;
                     case 5:
-                        mRootView.setTagAdapter(bean.get_$1832454640().getSubTags());
+                        mRootView.setTagAdapter(bean.get_$1832454640().getSubTags(), leftId);
                         break;
                 }
             }

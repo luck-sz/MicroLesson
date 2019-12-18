@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.lesson.R;
 import com.example.lesson.app.base.MySupportFragment;
+import com.example.lesson.app.eventbus.ChangeTag;
 import com.example.lesson.di.component.DaggerHomeComponent;
 import com.example.lesson.mvp.contract.HomeContract;
 import com.example.lesson.mvp.presenter.HomePresenter;
@@ -21,12 +22,15 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 
+import org.simple.eventbus.Subscriber;
+
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -130,5 +134,10 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     public void onViewClicked() {
         Intent intent = new Intent(_mActivity, CategoryActivity.class);
         launchActivity(intent);
+    }
+
+    @Subscriber(tag = "ChangeTag")
+    public void changTag(ChangeTag changeTag) {
+        mPresenter.changeState(changeTag.getList());
     }
 }

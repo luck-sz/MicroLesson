@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.example.lesson.app.data.api.service.ApiService;
 import com.example.lesson.app.data.entity.CategoryBean;
+import com.example.lesson.app.data.entity.RecommendBean;
+import com.example.lesson.app.data.entity.TagSuccessBean;
 import com.google.gson.Gson;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
@@ -13,6 +15,8 @@ import com.jess.arms.di.scope.FragmentScope;
 import javax.inject.Inject;
 
 import com.example.lesson.mvp.contract.HomeContract;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -46,5 +50,17 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public Observable<TagSuccessBean> changeState(List<Integer> list) {
+        return mRepositoryManager.obtainRetrofitService(ApiService.class)
+                .changeState(list);
+    }
+
+    @Override
+    public Observable<RecommendBean> getCommend() {
+        return mRepositoryManager.obtainRetrofitService(ApiService.class)
+                .getRecommend();
     }
 }

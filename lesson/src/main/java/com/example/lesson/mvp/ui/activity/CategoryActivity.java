@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.lesson.R;
 import com.example.lesson.app.base.MySupportActivity;
 import com.example.lesson.app.data.entity.SubTagsBean;
+import com.example.lesson.app.eventbus.ChangeTag;
 import com.example.lesson.di.component.DaggerCategoryComponent;
 import com.example.lesson.mvp.contract.CategoryContract;
 import com.example.lesson.mvp.presenter.CategoryPresenter;
@@ -30,10 +31,14 @@ import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
+import org.simple.eventbus.EventBus;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -60,6 +65,7 @@ public class CategoryActivity extends MySupportActivity<CategoryPresenter> imple
     TagFlowLayout mTagFlowLayout;
 
     TagAdapter tagAdapter;
+    List<Integer> numbers;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -139,7 +145,7 @@ public class CategoryActivity extends MySupportActivity<CategoryPresenter> imple
     }
 
     @Override
-    public void setTagAdapter(List<SubTagsBean> list) {
+    public void setTagAdapter(List<SubTagsBean> list, int leftId) {
         tagAdapter = new TagAdapter<SubTagsBean>(list) {
             @Override
             public View getView(FlowLayout parent, int position, SubTagsBean bean) {
@@ -150,7 +156,7 @@ public class CategoryActivity extends MySupportActivity<CategoryPresenter> imple
                 if (bean.getTagId() == 2364) {
                     textView.setTextColor(Color.parseColor("#0CB65B"));
                     cardView.setCardBackgroundColor(Color.parseColor("#F9FEF8"));
-                }else {
+                } else {
                     textView.setTextColor(Color.parseColor("#A5A9AD"));
                     cardView.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
                 }
@@ -161,7 +167,11 @@ public class CategoryActivity extends MySupportActivity<CategoryPresenter> imple
         mTagFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
-
+                numbers = new ArrayList<>();
+                numbers.add(leftId);
+                numbers.add(list.get(position).getTagId());
+                EventBus.getDefault().post(new ChangeTag(numbers), "ChangeTag");
+                finish();
                 return true;
             }
         });
