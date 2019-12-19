@@ -692,6 +692,11 @@ public class RecommendBean {
             private String tagName;
             private boolean tagOnFire;
 
+            public SubTagsBean(String tagId, String tagName) {
+                this.tagId = tagId;
+                this.tagName = tagName;
+            }
+
             public boolean isRedirect() {
                 return redirect;
             }

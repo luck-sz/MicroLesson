@@ -4,14 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.lesson.R;
 import com.example.lesson.app.base.MySupportFragment;
+import com.example.lesson.app.data.entity.RecommendBean;
 import com.example.lesson.app.eventbus.ChangeTag;
 import com.example.lesson.di.component.DaggerHomeComponent;
 import com.example.lesson.mvp.contract.HomeContract;
@@ -24,13 +28,10 @@ import com.jess.arms.utils.ArmsUtils;
 
 import org.simple.eventbus.Subscriber;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -55,7 +56,14 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     SlidingTabLayout tabHome;
     @BindView(R.id.vp_content)
     ViewPager vpContent;
-    Unbinder unbinder;
+    @BindView(R.id.toolbar_text)
+    TextView mTitle;
+    @BindView(R.id.ll_choose)
+    LinearLayout choose;
+    List<Integer> numbers;
+    TabAdapter adapter;
+    List<Fragment> fragments;
+    List<String> mTitles;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -80,7 +88,10 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         initToolBar();
-        mPresenter.setTab();
+        numbers = new ArrayList<>();
+        numbers.add(430);
+        numbers.add(1068);
+        mPresenter.changeState(numbers);
     }
 
     @Override
@@ -119,25 +130,47 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     }
 
     @Override
-    public void setTabTitle(List<String> title) {
-        TabAdapter adapter = new TabAdapter(getChildFragmentManager());
-        for (int i = 0; i < title.size(); i++) {
-            adapter.addFragment(TabChildFragment.newInstance(), title.get(i));
+    public void setTitle(List<RecommendBean.DataBean.UserStagesBean> stagesBean) {
+        if (stagesBean.size() > 0) {
+            mTitle.setText(stagesBean.get(0).getTagName());
+            choose.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), CategoryActivity.class);
+                numbers = new ArrayList<>();
+                for (int i = 0; i < stagesBean.size(); i++) {
+                    numbers.add(Integer.valueOf(stagesBean.get(0).getTagId()));
+                }
+                intent.putIntegerArrayListExtra("numbers", (ArrayList<Integer>) numbers);
+                launchActivity(intent);
+            });
         }
-        vpContent.setAdapter(adapter);
-        tabHome.setViewPager(vpContent);
-        // 设置tab选项卡的默认选项
-        tabHome.setCurrentTab(0);
     }
 
-    @OnClick(R.id.toolbar_text)
-    public void onViewClicked() {
-        Intent intent = new Intent(_mActivity, CategoryActivity.class);
-        launchActivity(intent);
+    @Override
+    public void setTabTitle(List<RecommendBean.DataBean.SubTagsBean> subTagsBeans) {
+        mTitles = new ArrayList<>();
+        fragments = new ArrayList<>();
+        mTitles.add("精选");
+        fragments.add(RecommendFragment.newInstance());
+        for (int i = 0; i < subTagsBeans.size(); i++) {
+            mTitles.add(subTagsBeans.get(i).getTagName());
+            fragments.add(TabChildFragment.newInstance(subTagsBeans.get(i).getTagName()));
+        }
+        adapter = new TabAdapter(getChildFragmentManager(), fragments, mTitles);
+        vpContent.setAdapter(adapter);
+        // 设置tab选项卡的默认选项
+        tabHome.setViewPager(vpContent);
+        tabHome.setCurrentTab(0);
     }
 
     @Subscriber(tag = "ChangeTag")
     public void changTag(ChangeTag changeTag) {
+        tabHome.setCurrentTab(0);
         mPresenter.changeState(changeTag.getList());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        numbers = null;
     }
 }

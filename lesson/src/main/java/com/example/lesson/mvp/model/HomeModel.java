@@ -19,6 +19,8 @@ import com.example.lesson.mvp.contract.HomeContract;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Function;
 
 
 /**
@@ -53,14 +55,20 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
     }
 
     @Override
-    public Observable<TagSuccessBean> changeState(List<Integer> list) {
-        return mRepositoryManager.obtainRetrofitService(ApiService.class)
-                .changeState(list);
-    }
+    public Observable<RecommendBean> getCommend(List<Integer> list) {
 
-    @Override
-    public Observable<RecommendBean> getCommend() {
         return mRepositoryManager.obtainRetrofitService(ApiService.class)
-                .getRecommend();
+                .changeState(list)
+                .flatMap(new Function<TagSuccessBean, ObservableSource<RecommendBean>>() {
+                    @Override
+                    public ObservableSource<RecommendBean> apply(TagSuccessBean tagSuccessBean) throws Exception {
+                        if (tagSuccessBean.getCode().equals("0")) {
+                            return mRepositoryManager.obtainRetrofitService(ApiService.class)
+                                    .getRecommend();
+                        } else {
+                            return null;
+                        }
+                    }
+                });
     }
 }

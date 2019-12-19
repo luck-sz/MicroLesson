@@ -1,6 +1,7 @@
 package com.example.lesson.mvp.presenter;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.example.lesson.app.data.entity.CategoryBean;
 import com.example.lesson.app.data.entity.RecommendBean;
@@ -47,7 +48,7 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
     ImageLoader mImageLoader;
     @Inject
     AppManager mAppManager;
-    List<String> list;
+    List<RecommendBean.DataBean.SubTagsBean> list;
 
     @Inject
     public HomePresenter(HomeContract.Model model, HomeContract.View rootView) {
@@ -64,38 +65,22 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
     }
 
     public void changeState(List<Integer> list) {
-        mModel.changeState(list)
+        mModel.getCommend(list)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<TagSuccessBean>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<RecommendBean>(mErrorHandler) {
                     @Override
-                    public void onNext(TagSuccessBean tagSuccessBean) {
-                        if (tagSuccessBean.getCode().equals("200")) {
-                            mModel.getCommend()
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                                    .subscribe(new ErrorHandleSubscriber<RecommendBean>(mErrorHandler) {
-                                        @Override
-                                        public void onNext(RecommendBean recommendBean) {
-
-                                        }
-                                    });
-                        }
+                    public void onNext(RecommendBean recommendBean) {
+                        mRootView.setTitle(recommendBean.getData().getUserStages());
+                        initTitleDate(recommendBean);
                     }
                 });
     }
 
-    public void setTab() {
+    private void initTitleDate(RecommendBean recommendBean) {
         list = new ArrayList<>();
-        list.add("精选");
-        list.add("语文");
-        list.add("数学");
-        list.add("英语");
-        list.add("物理");
-        list.add("化学");
-        list.add("生物");
+        list = recommendBean.getData().getSubTags();
         mRootView.setTabTitle(list);
     }
 }

@@ -1,40 +1,41 @@
 package com.example.lesson.mvp.ui.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
 import com.example.lesson.mvp.ui.fragment.TabChildFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TabAdapter extends FragmentPagerAdapter {
+public class TabAdapter extends FragmentStatePagerAdapter {
 
-    List<TabChildFragment> mList = new ArrayList<>();
-    List<String> name = new ArrayList<>();
+    List<Fragment> fragments;
+    List<String> mTitle;
 
-    public TabAdapter(FragmentManager fm) {
+    public TabAdapter(FragmentManager fm, List<Fragment> fragments, List<String> mTitle) {
         super(fm);
-    }
-
-    public void addFragment(TabChildFragment fragment, String title) {
-        mList.add(fragment);
-        name.add(title);
+        this.fragments = fragments;
+        this.mTitle = mTitle;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return mList.get(position);
+        return fragments.get(position);
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return name.get(position);
+        return mTitle.get(position);
     }
 
     @Override
     public int getCount() {
-        return mList.size();
+        return mTitle.size();
     }
+
 }
