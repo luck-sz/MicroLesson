@@ -77,7 +77,9 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
                     @Override
                     public void onNext(CategoryBean categoryBean) {
                         bean = categoryBean.getData().getStages();
+                        // 左边列表
                         setLeftAdapter(bean.get_$154271985().getSubTags(), tagId);
+                        // 初始左边列表选中位置以及右边tag数据
                         setLeftIdx(leftId, tagId);
                     }
                 });
@@ -93,6 +95,7 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
         }
     }
 
+    // 右边tag数据
     private void setTagDate(int position, int leftId, int tagId) {
         switch (position) {
             case 0:
