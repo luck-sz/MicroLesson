@@ -1,10 +1,7 @@
 package com.example.lesson.mvp.presenter;
 
 import android.app.Application;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.lesson.R;
@@ -20,17 +17,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
-import timber.log.Timber;
 
 import javax.inject.Inject;
 
 import com.example.lesson.mvp.contract.CategoryContract;
 import com.jess.arms.utils.RxLifecycleUtils;
-import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.List;
 
 
@@ -75,7 +68,7 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
         this.mApplication = null;
     }
 
-    public void getCategory() {
+    public void getCategory(int leftId, int tagId) {
         mModel.getCategory()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -84,14 +77,47 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
                     @Override
                     public void onNext(CategoryBean categoryBean) {
                         bean = categoryBean.getData().getStages();
-                        mRootView.setTagAdapter(bean.get_$382633109().getSubTags(),1276);
-                        setLeftAdapter(bean.get_$154271985().getSubTags());
+                        setLeftAdapter(bean.get_$154271985().getSubTags(), tagId);
+                        setLeftIdx(leftId, tagId);
                     }
                 });
     }
 
+    private void setLeftIdx(int leftId, int tagId) {
+        for (int i = 0; i < categoryLeftAdapter.getItemCount(); i++) {
+            if (leftId == categoryLeftAdapter.getData().get(i).getTagId()) {
+                // 左边列表的位置以及对应的数据
+                categoryLeftAdapter.idx = i;
+                setTagDate(i, leftId, tagId);
+            }
+        }
+    }
+
+    private void setTagDate(int position, int leftId, int tagId) {
+        switch (position) {
+            case 0:
+                mRootView.setTagAdapter(bean.get_$382633109().getSubTags(), leftId, tagId);
+                break;
+            case 1:
+                mRootView.setTagAdapter(bean.get_$1773877388().getSubTags(), leftId, tagId);
+                break;
+            case 2:
+                mRootView.setTagAdapter(bean.get_$1003657994().getSubTags(), leftId, tagId);
+                break;
+            case 3:
+                mRootView.setTagAdapter(bean.get_$842753927().getSubTags(), leftId, tagId);
+                break;
+            case 4:
+                mRootView.setTagAdapter(bean.get_$340228195().getSubTags(), leftId, tagId);
+                break;
+            case 5:
+                mRootView.setTagAdapter(bean.get_$1832454640().getSubTags(), leftId, tagId);
+                break;
+        }
+    }
+
     // 分类左边列表
-    private void setLeftAdapter(List<SubTagsBean> subTags) {
+    private void setLeftAdapter(List<SubTagsBean> subTags, int tagId) {
         if (categoryLeftAdapter == null) {
             categoryLeftAdapter = new CategoryLeftAdapter(R.layout.item_category_left, subTags);
         }
@@ -102,26 +128,7 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
                 categoryLeftAdapter.idx = position;
                 categoryLeftAdapter.notifyDataSetChanged();
                 int leftId = subTags.get(position).getTagId();
-                switch (position) {
-                    case 0:
-                        mRootView.setTagAdapter(bean.get_$382633109().getSubTags(), leftId);
-                        break;
-                    case 1:
-                        mRootView.setTagAdapter(bean.get_$1773877388().getSubTags(), leftId);
-                        break;
-                    case 2:
-                        mRootView.setTagAdapter(bean.get_$1003657994().getSubTags(), leftId);
-                        break;
-                    case 3:
-                        mRootView.setTagAdapter(bean.get_$842753927().getSubTags(), leftId);
-                        break;
-                    case 4:
-                        mRootView.setTagAdapter(bean.get_$340228195().getSubTags(), leftId);
-                        break;
-                    case 5:
-                        mRootView.setTagAdapter(bean.get_$1832454640().getSubTags(), leftId);
-                        break;
-                }
+                setTagDate(position, leftId, tagId);
             }
         });
     }

@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -135,11 +136,12 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
             mTitle.setText(stagesBean.get(0).getTagName());
             choose.setOnClickListener(v -> {
                 Intent intent = new Intent(getActivity(), CategoryActivity.class);
-                numbers = new ArrayList<>();
-                for (int i = 0; i < stagesBean.size(); i++) {
-                    numbers.add(Integer.valueOf(stagesBean.get(0).getTagId()));
-                }
-                intent.putIntegerArrayListExtra("numbers", (ArrayList<Integer>) numbers);
+                int leftId = Integer.parseInt(stagesBean.get(0).getTagId());
+                int tagId = Integer.parseInt(stagesBean.get(1).getTagId());
+                Bundle bundle = new Bundle();
+                bundle.putInt("leftId", leftId);
+                bundle.putInt("tagId", tagId);
+                intent.putExtra("bundle", bundle);
                 launchActivity(intent);
             });
         }

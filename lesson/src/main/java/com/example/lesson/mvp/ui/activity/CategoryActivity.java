@@ -67,6 +67,10 @@ public class CategoryActivity extends MySupportActivity<CategoryPresenter> imple
     TagAdapter tagAdapter;
     List<Integer> numbers;
 
+    Bundle bundle;
+    int leftId;
+    int tagId;
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerCategoryComponent //如找不到该类,请编译一下项目
@@ -84,9 +88,15 @@ public class CategoryActivity extends MySupportActivity<CategoryPresenter> imple
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        if (getIntent() != null) {
+            bundle = getIntent().getBundleExtra("bundle");
+            leftId = bundle.getInt("leftId");
+            tagId = bundle.getInt("tagId");
+            mPresenter.getCategory(leftId, tagId);
+        }
         initStatusBar();
         initToolbar();
-        mPresenter.getCategory();
+
     }
 
     @Override
@@ -144,8 +154,9 @@ public class CategoryActivity extends MySupportActivity<CategoryPresenter> imple
         mRecycleView.setAdapter(categoryLeftAdapter);
     }
 
+
     @Override
-    public void setTagAdapter(List<SubTagsBean> list, int leftId) {
+    public void setTagAdapter(List<SubTagsBean> list, int leftId, int tagId) {
         tagAdapter = new TagAdapter<SubTagsBean>(list) {
             @Override
             public View getView(FlowLayout parent, int position, SubTagsBean bean) {
@@ -153,7 +164,7 @@ public class CategoryActivity extends MySupportActivity<CategoryPresenter> imple
                 TextView textView = mTagLayout.findViewById(R.id.mTvTag);
                 CardView cardView = mTagLayout.findViewById(R.id.cardView);
                 textView.setText(bean.getTagName());
-                if (bean.getTagId() == 2364) {
+                if (bean.getTagId() == tagId) {
                     textView.setTextColor(Color.parseColor("#0CB65B"));
                     cardView.setCardBackgroundColor(Color.parseColor("#F9FEF8"));
                 } else {
