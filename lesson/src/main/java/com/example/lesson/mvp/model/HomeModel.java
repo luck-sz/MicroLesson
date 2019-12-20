@@ -55,7 +55,7 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
     }
 
     @Override
-    public Observable<RecommendBean> getCommend(List<Integer> list) {
+    public Observable<RecommendBean> getRecommend(List<Integer> list) {
 
         return mRepositoryManager.obtainRetrofitService(ApiService.class)
                 .changeState(list)

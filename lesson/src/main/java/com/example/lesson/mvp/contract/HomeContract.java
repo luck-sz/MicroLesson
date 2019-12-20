@@ -3,6 +3,7 @@ package com.example.lesson.mvp.contract;
 import com.example.lesson.app.data.entity.CategoryBean;
 import com.example.lesson.app.data.entity.RecommendBean;
 import com.example.lesson.app.data.entity.TagSuccessBean;
+import com.example.lesson.mvp.ui.adapter.RecommendMultipleItemAdapter;
 import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
 
@@ -28,14 +29,16 @@ public interface HomeContract {
     interface View extends IView {
         // 设置学习阶段(Toolbar标题)
         void setTitle(List<RecommendBean.DataBean.UserStagesBean> stagesBean);
+
         // 设置tab标题
-        void setTabTitle(List<RecommendBean.DataBean.SubTagsBean> subTagsBeans);
+        void setTabTitle(RecommendBean bean);
+
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
     interface Model extends IModel {
 
         // 先改变学习阶段然后获取精选内容
-        Observable<RecommendBean> getCommend(List<Integer> list);
+        Observable<RecommendBean> getRecommend(List<Integer> list);
     }
 }

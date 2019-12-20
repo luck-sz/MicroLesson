@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">微课堂</string>
     <!--toolbar-->
-    <string name="toolbar_search_text">输入课程或则教师名字</string>
+    <string name="toolbar_search_text">输入课程或教师名字</string>
     <string name="app_introduce">名师指导，在线授课，助你健步如飞。</string>
     <!--Home-->
     <string name="home_find">发现课程</string>

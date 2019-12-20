@@ -37,7 +37,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="初二"
+                            android:text="三年级"
                             android:textColor="#353F49"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -55,7 +55,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="12dp"
+                        android:layout_marginLeft="10dp"
                         android:background="@drawable/main_search_background"
                         android:gravity="center">
 

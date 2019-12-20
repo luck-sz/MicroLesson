@@ -65,7 +65,7 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
     }
 
     public void changeState(List<Integer> list) {
-        mModel.getCommend(list)
+        mModel.getRecommend(list)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
@@ -73,14 +73,9 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
                     @Override
                     public void onNext(RecommendBean recommendBean) {
                         mRootView.setTitle(recommendBean.getData().getUserStages());
-                        initTitleDate(recommendBean);
+                        mRootView.setTabTitle(recommendBean);
                     }
                 });
-    }
 
-    private void initTitleDate(RecommendBean recommendBean) {
-        list = new ArrayList<>();
-        list = recommendBean.getData().getSubTags();
-        mRootView.setTabTitle(list);
     }
 }

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_serial_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/section_serial_categoryname"
+        android:text="小学"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_serial_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:ellipsize="end"
+        android:maxEms="13"
+        android:maxLines="1"
+        android:textColor="#353F49"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_serial_tag"
+        app:layout_constraintStart_toEndOf="@+id/tv_serial_tag"
+        app:layout_constraintTop_toTopOf="@+id/tv_serial_tag" />
+
+    <TextView
+        android:id="@+id/tv_serial_timeNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/serial_type_count"
+        android:textColor="#EDA170"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_serial_tag"
+        app:layout_constraintTop_toBottomOf="@+id/tv_serial_tag" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_teacher1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_serial_timeNum">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/cv_teacher1"
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
+
+        <TextView
+            android:id="@+id/tv_name1"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:maxEms="4"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="覃泳峰"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_teacher2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/ll_teacher1"
+        app:layout_constraintStart_toEndOf="@+id/ll_teacher1"
+        app:layout_constraintTop_toTopOf="@+id/ll_teacher1">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/cv_teacher2"
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
+
+        <TextView
+            android:id="@+id/tv_name2"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:maxEms="4"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="覃泳峰"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_teacher3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/ll_teacher2"
+        app:layout_constraintStart_toEndOf="@+id/ll_teacher2"
+        app:layout_constraintTop_toTopOf="@+id/ll_teacher2">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/cv_teacher3"
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
+
+        <TextView
+            android:id="@+id/tv_name3"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:maxEms="4"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="覃泳峰"
+            android:textSize="10sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:gravity="right|center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/ll_teacher1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ll_teacher1">
+
+        <TextView
+            android:id="@+id/tv_serial_price"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="￥0.0 - 9.9"
+            android:textColor="#F87D41"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_serial_buy"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="已有970人购买"
+            android:textColor="#A5A9AD"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="#d8d8d8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

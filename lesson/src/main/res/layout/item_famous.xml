@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_teacher"
+        android:layout_width="90dp"
+        android:layout_height="108dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/special_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxEms="11"
+        android:maxLines="1"
+        android:textColor="#353F49"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/iv_teacher"
+        app:layout_constraintTop_toTopOf="@+id/iv_teacher" />
+
+    <TextView
+        android:id="@+id/tv_teacher_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="16dp"
+        android:textColor="#A5A9AD"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/iv_teacher"
+        app:layout_constraintTop_toBottomOf="@+id/special_title" />
+
+    <TextView
+        android:id="@+id/tv_teacher_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:background="@drawable/section_special_teachertag"
+        android:textColor="#AAA02D"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_teacher_name"
+        app:layout_constraintStart_toEndOf="@+id/tv_teacher_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_teacher_name" />
+
+    <TextView
+        android:id="@+id/special_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:lineSpacingExtra="5dp"
+        android:maxEms="10"
+        android:maxLines="2"
+        android:textColor="#A5A9AD"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_teacher"
+        app:layout_constraintStart_toEndOf="@+id/iv_teacher"
+        app:layout_constraintTop_toBottomOf="@+id/tv_teacher_name" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="#d8d8d8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

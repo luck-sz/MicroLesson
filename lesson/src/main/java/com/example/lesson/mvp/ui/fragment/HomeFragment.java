@@ -21,6 +21,7 @@ import com.example.lesson.di.component.DaggerHomeComponent;
 import com.example.lesson.mvp.contract.HomeContract;
 import com.example.lesson.mvp.presenter.HomePresenter;
 import com.example.lesson.mvp.ui.activity.CategoryActivity;
+import com.example.lesson.mvp.ui.adapter.RecommendMultipleItemAdapter;
 import com.example.lesson.mvp.ui.adapter.TabAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.jess.arms.di.component.AppComponent;
@@ -133,7 +134,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     @Override
     public void setTitle(List<RecommendBean.DataBean.UserStagesBean> stagesBean) {
         if (stagesBean.size() > 0) {
-            mTitle.setText(stagesBean.get(0).getTagName());
+            mTitle.setText(stagesBean.get(1).getTagName());
             choose.setOnClickListener(v -> {
                 Intent intent = new Intent(getActivity(), CategoryActivity.class);
                 int leftId = Integer.parseInt(stagesBean.get(0).getTagId());
@@ -148,14 +149,14 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     }
 
     @Override
-    public void setTabTitle(List<RecommendBean.DataBean.SubTagsBean> subTagsBeans) {
+    public void setTabTitle(RecommendBean bean) {
         mTitles = new ArrayList<>();
         fragments = new ArrayList<>();
         mTitles.add("精选");
         fragments.add(RecommendFragment.newInstance());
-        for (int i = 0; i < subTagsBeans.size(); i++) {
-            mTitles.add(subTagsBeans.get(i).getTagName());
-            fragments.add(TabChildFragment.newInstance(subTagsBeans.get(i).getTagName()));
+        for (int i = 0; i < bean.getData().getSubTags().size(); i++) {
+            mTitles.add(bean.getData().getSubTags().get(i).getTagName());
+            fragments.add(TabChildFragment.newInstance(bean.getData().getSubTags().get(i).getTagId()));
         }
         adapter = new TabAdapter(getChildFragmentManager(), fragments, mTitles);
         vpContent.setAdapter(adapter);
