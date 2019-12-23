@@ -168,6 +168,13 @@ public class RecommendFragment extends MySupportFragment<RecommendPresenter> imp
         rvRecommend.setAdapter(adapter);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        view = null;
+        mBannerView = null;
+    }
+
     private void initRefreshLayout() {
         mRefreshLayout.setColorSchemeColors(ArmsUtils.getColor(_mActivity, R.color.unSelectColor));
         mRefreshLayout.setOnRefreshListener(() -> {

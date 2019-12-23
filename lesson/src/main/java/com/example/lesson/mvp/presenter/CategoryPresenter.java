@@ -52,7 +52,6 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
 
     CategoryBean.DataBean.StagesBean bean = null;
     CategoryLeftAdapter categoryLeftAdapter;
-    TagAdapter tagAdapter;
 
     @Inject
     public CategoryPresenter(CategoryContract.Model model, CategoryContract.View rootView) {

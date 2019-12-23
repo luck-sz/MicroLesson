@@ -51,6 +51,7 @@ public class LessonModel extends BaseModel implements LessonContract.Model {
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+        this.list = null;
     }
 
     @Override

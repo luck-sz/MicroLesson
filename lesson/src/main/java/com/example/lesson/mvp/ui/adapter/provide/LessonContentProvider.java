@@ -33,7 +33,6 @@ public class LessonContentProvider extends BaseItemProvider<LessonMultipleItem, 
         int teacher[] = {R.id.ll_teacher1, R.id.ll_teacher2, R.id.ll_teacher3};
         int img[] = {R.id.cv_teacher1, R.id.cv_teacher2, R.id.cv_teacher3};
         int name[] = {R.id.tv_name1, R.id.tv_name2, R.id.tv_name3};
-        Timber.d("老师列表" + data.getBean().getTeacherList().size());
         for (int i = 0; i < data.getBean().getTeacherList().size(); i++) {
             if (i < 3) {
                 helper.setVisible(teacher[i], true);

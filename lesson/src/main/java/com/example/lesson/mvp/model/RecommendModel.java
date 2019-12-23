@@ -55,6 +55,7 @@ public class RecommendModel extends BaseModel implements RecommendContract.Model
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+        this.list = null;
     }
 
     @Override

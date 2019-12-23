@@ -58,6 +58,7 @@ public class LessonFragment extends MySupportFragment<LessonPresenter> implement
     String tagId;
     View mBannerView;
     MZBannerView mMyBanner;
+    View view;
 
     public static LessonFragment newInstance(String tagId) {
         LessonFragment fragment = new LessonFragment();
@@ -79,7 +80,8 @@ public class LessonFragment extends MySupportFragment<LessonPresenter> implement
 
     @Override
     public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_lesson, container, false);
+        view = inflater.inflate(R.layout.fragment_lesson, container, false);
+        return view;
     }
 
     @Override
@@ -176,6 +178,13 @@ public class LessonFragment extends MySupportFragment<LessonPresenter> implement
     public void onResume() {
         super.onResume();
         mMyBanner.start();//开始轮播
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        view = null;
+        mBannerView = null;
     }
 
     private void initRefreshLayout() {

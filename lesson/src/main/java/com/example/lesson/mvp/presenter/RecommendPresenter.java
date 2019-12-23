@@ -64,6 +64,8 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.Model, R
         this.mAppManager = null;
         this.mImageLoader = null;
         this.mApplication = null;
+        this.adapter = null;
+        this.list = null;
     }
 
     public void initAdapter() {

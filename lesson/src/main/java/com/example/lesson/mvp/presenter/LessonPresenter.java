@@ -65,6 +65,8 @@ public class LessonPresenter extends BasePresenter<LessonContract.Model, LessonC
         this.mAppManager = null;
         this.mImageLoader = null;
         this.mApplication = null;
+        this.adapter = null;
+        this.list = null;
     }
 
     public void getLesson(String tagId) {
@@ -83,9 +85,7 @@ public class LessonPresenter extends BasePresenter<LessonContract.Model, LessonC
                     public void onNext(LessonBean lessonBean) {
                         mRootView.setBanner(lessonBean.getData().getBanner());
                         list = mModel.setData(lessonBean);
-                        if (list.size() > 0) {
-                            setAdapter(list);
-                        }
+                        setAdapter(list);
                     }
                 });
     }

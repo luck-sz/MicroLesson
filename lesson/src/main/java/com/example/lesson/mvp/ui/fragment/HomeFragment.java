@@ -61,10 +61,12 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     TextView mTitle;
     @BindView(R.id.ll_choose)
     LinearLayout choose;
+
     List<Integer> numbers;
-    TabAdapter adapter;
-    List<Fragment> fragments;
     List<String> mTitles;
+    List<String> tagIds;
+    View view;
+    TabAdapter adapter;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -83,7 +85,8 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
 
     @Override
     public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        view = inflater.inflate(R.layout.fragment_home, container, false);
+        return view;
     }
 
     @Override
@@ -149,15 +152,14 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
 
     @Override
     public void setTabTitle(RecommendBean bean) {
+        tagIds = new ArrayList<>();
         mTitles = new ArrayList<>();
-        fragments = new ArrayList<>();
         mTitles.add("精选");
-        fragments.add(RecommendFragment.newInstance());
         for (int i = 0; i < bean.getData().getSubTags().size(); i++) {
             mTitles.add(bean.getData().getSubTags().get(i).getTagName());
-            fragments.add(LessonFragment.newInstance(bean.getData().getSubTags().get(i).getTagId()));
+            tagIds.add(bean.getData().getSubTags().get(i).getTagId());
         }
-        adapter = new TabAdapter(getChildFragmentManager(), fragments, mTitles);
+        adapter = new TabAdapter(getChildFragmentManager(), mTitles, tagIds);
         vpContent.setAdapter(adapter);
         // 设置tab选项卡的默认选项
         tabHome.setViewPager(vpContent);
@@ -174,5 +176,15 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     public void onDestroy() {
         super.onDestroy();
         numbers = null;
+        view = null;
+        mTitles = null;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        numbers = null;
+        view = null;
+        mTitles = null;
     }
 }

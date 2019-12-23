@@ -4,22 +4,32 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.example.lesson.mvp.ui.fragment.HomeFragment;
+import com.example.lesson.mvp.ui.fragment.LessonFragment;
+import com.example.lesson.mvp.ui.fragment.RecommendFragment;
+
 import java.util.List;
+
+import timber.log.Timber;
 
 public class TabAdapter extends FragmentStatePagerAdapter {
 
-    List<Fragment> fragments;
     List<String> mTitle;
+    List<String> tagIds;
 
-    public TabAdapter(FragmentManager fm, List<Fragment> fragments, List<String> mTitle) {
+    public TabAdapter(FragmentManager fm, List<String> mTitle, List<String> tagIds) {
         super(fm);
-        this.fragments = fragments;
         this.mTitle = mTitle;
+        this.tagIds = tagIds;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return fragments.get(position);
+        if (position == 0) {
+            return RecommendFragment.newInstance();
+        } else {
+            return LessonFragment.newInstance(tagIds.get(position - 1));
+        }
     }
 
     @Override

@@ -48,7 +48,6 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
     ImageLoader mImageLoader;
     @Inject
     AppManager mAppManager;
-    List<RecommendBean.DataBean.SubTagsBean> list;
 
     @Inject
     public HomePresenter(HomeContract.Model model, HomeContract.View rootView) {
