@@ -3,13 +3,13 @@ package com.example.lesson.di.component;
 import dagger.BindsInstance;
 import dagger.Component;
 
+import com.example.lesson.mvp.contract.LessonContract;
 import com.jess.arms.di.component.AppComponent;
 
-import com.example.lesson.di.module.TabChildModule;
-import com.example.lesson.mvp.contract.TabChildContract;
+import com.example.lesson.di.module.LessonModule;
 
 import com.jess.arms.di.scope.FragmentScope;
-import com.example.lesson.mvp.ui.fragment.TabChildFragment;
+import com.example.lesson.mvp.ui.fragment.LessonFragment;
 
 
 /**
@@ -25,17 +25,17 @@ import com.example.lesson.mvp.ui.fragment.TabChildFragment;
  * ================================================
  */
 @FragmentScope
-@Component(modules = TabChildModule.class, dependencies = AppComponent.class)
-public interface TabChildComponent {
-    void inject(TabChildFragment fragment);
+@Component(modules = LessonModule.class, dependencies = AppComponent.class)
+public interface LessonComponent {
+    void inject(LessonFragment fragment);
 
     @Component.Builder
     interface Builder {
         @BindsInstance
-        TabChildComponent.Builder view(TabChildContract.View view);
+        LessonComponent.Builder view(LessonContract.View view);
 
-        TabChildComponent.Builder appComponent(AppComponent appComponent);
+        LessonComponent.Builder appComponent(AppComponent appComponent);
 
-        TabChildComponent build();
+        LessonComponent build();
     }
 }

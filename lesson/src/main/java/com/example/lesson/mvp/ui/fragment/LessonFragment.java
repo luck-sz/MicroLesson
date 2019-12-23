@@ -10,18 +10,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.example.lesson.R;
 import com.example.lesson.app.base.MySupportFragment;
-import com.example.lesson.app.data.entity.RecommendBean;
-import com.example.lesson.di.component.DaggerRecommendComponent;
-import com.example.lesson.mvp.contract.RecommendContract;
-import com.example.lesson.mvp.presenter.RecommendPresenter;
-import com.example.lesson.mvp.ui.adapter.RecommendMultipleItemAdapter;
+import com.example.lesson.app.data.entity.LessonBean;
+import com.example.lesson.mvp.contract.LessonContract;
+import com.example.lesson.mvp.ui.adapter.LessonMultipleItemAdapter;
 import com.example.lesson.mvp.ui.view.BannerViewHolder;
-import com.example.lesson.mvp.ui.view.RecycleViewDivider;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
+
+import com.example.lesson.di.component.DaggerLessonComponent;
+import com.example.lesson.mvp.presenter.LessonPresenter;
+
+import com.example.lesson.R;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 
@@ -29,8 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
@@ -40,7 +40,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 12/19/2019 10:20
+ * Created by MVPArmsTemplate on 12/17/2019 11:41
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -48,25 +48,28 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
  * ================================================
  */
-public class RecommendFragment extends MySupportFragment<RecommendPresenter> implements RecommendContract.View {
+public class LessonFragment extends MySupportFragment<LessonPresenter> implements LessonContract.View {
 
-    @BindView(R.id.rv_recommend)
-    RecyclerView rvRecommend;
+    @BindView(R.id.rv_lesson)
+    RecyclerView rvLesson;
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mRefreshLayout;
 
-    View view;
+    String tagId;
     View mBannerView;
     MZBannerView mMyBanner;
 
-    public static RecommendFragment newInstance() {
-        RecommendFragment fragment = new RecommendFragment();
+    public static LessonFragment newInstance(String tagId) {
+        LessonFragment fragment = new LessonFragment();
+        Bundle args = new Bundle();
+        args.putString("tagId", tagId);
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
-        DaggerRecommendComponent //如找不到该类,请编译一下项目
+        DaggerLessonComponent //如找不到该类,请编译一下项目
                 .builder()
                 .appComponent(appComponent)
                 .view(this)
@@ -76,15 +79,19 @@ public class RecommendFragment extends MySupportFragment<RecommendPresenter> imp
 
     @Override
     public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_recommend, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_lesson, container, false);
     }
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        initRefreshLayout();
         initBannerView();
-        mPresenter.initAdapter();
+        if (getArguments() != null) {
+            tagId = getArguments().getString("tagId");
+            if (!tagId.equals("") && mPresenter != null) {
+                mPresenter.getLesson(tagId);
+            }
+        }
+        initRefreshLayout();
     }
 
     @Override
@@ -120,10 +127,13 @@ public class RecommendFragment extends MySupportFragment<RecommendPresenter> imp
     }
 
     @Override
-    public void setBanner(List<RecommendBean.DataBean.HeadBean> list) {
+    public void setBanner(List<LessonBean.DataBean.BannerBean> list) {
         List<String> url = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             url.add(list.get(i).getImg());
+        }
+        if (url.size() == 1) {
+            mMyBanner.setIndicatorVisible(false);
         }
         mMyBanner.setIndicatorVisible(true);
         mMyBanner.setDelayedTime(3000);
@@ -144,10 +154,16 @@ public class RecommendFragment extends MySupportFragment<RecommendPresenter> imp
     }
 
     @Override
-    public void addBanner(RecommendMultipleItemAdapter adapter) {
+    public void addBanner(LessonMultipleItemAdapter adapter) {
         if (adapter.getHeaderLayoutCount() < 1) {
             adapter.addHeaderView(mBannerView);
         }
+    }
+
+    @Override
+    public void setContent(LessonMultipleItemAdapter adapter) {
+        rvLesson.setLayoutManager(new LinearLayoutManager(mContext));
+        rvLesson.setAdapter(adapter);
     }
 
     @Override
@@ -162,16 +178,10 @@ public class RecommendFragment extends MySupportFragment<RecommendPresenter> imp
         mMyBanner.start();//开始轮播
     }
 
-    @Override
-    public void setContent(RecommendMultipleItemAdapter adapter) {
-        rvRecommend.setLayoutManager(new LinearLayoutManager(mContext));
-        rvRecommend.setAdapter(adapter);
-    }
-
     private void initRefreshLayout() {
         mRefreshLayout.setColorSchemeColors(ArmsUtils.getColor(_mActivity, R.color.unSelectColor));
         mRefreshLayout.setOnRefreshListener(() -> {
-            mPresenter.initAdapter();
+            mPresenter.getLesson(tagId);
         });
     }
 

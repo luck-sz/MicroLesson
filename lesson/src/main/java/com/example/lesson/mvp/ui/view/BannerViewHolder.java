@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.lesson.R;
@@ -11,7 +12,7 @@ import com.example.lesson.app.data.entity.RecommendBean;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
 
 
-public class BannerViewHolder implements MZViewHolder<RecommendBean.DataBean.HeadBean> {
+public class BannerViewHolder implements MZViewHolder<String> {
     ImageView mImageView;
 
     @Override
@@ -23,10 +24,10 @@ public class BannerViewHolder implements MZViewHolder<RecommendBean.DataBean.Hea
     }
 
     @Override
-    public void onBind(Context context, int position, RecommendBean.DataBean.HeadBean banner) {
+    public void onBind(Context context, int position, String url) {
         // 数据绑定
         Glide.with(context)
-                .load(banner.getImg())
+                .load(url)
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .dontAnimate()

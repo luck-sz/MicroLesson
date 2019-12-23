@@ -1,13 +1,10 @@
 package com.example.lesson.di.module;
 
-import com.jess.arms.di.scope.FragmentScope;
-
 import dagger.Binds;
 import dagger.Module;
-import dagger.Provides;
 
-import com.example.lesson.mvp.contract.TabChildContract;
-import com.example.lesson.mvp.model.TabChildModel;
+import com.example.lesson.mvp.contract.LessonContract;
+import com.example.lesson.mvp.model.LessonModel;
 
 
 /**
@@ -23,8 +20,8 @@ import com.example.lesson.mvp.model.TabChildModel;
  * ================================================
  */
 @Module
-public abstract class TabChildModule {
+public abstract class LessonModule {
 
     @Binds
-    abstract TabChildContract.Model bindTabChildModel(TabChildModel model);
+    abstract LessonContract.Model bindTabChildModel(LessonModel model);
 }

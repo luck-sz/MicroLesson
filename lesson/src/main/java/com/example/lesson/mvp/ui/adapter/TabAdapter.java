@@ -1,15 +1,9 @@
 package com.example.lesson.mvp.ui.adapter;
 
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.view.ViewGroup;
 
-import com.example.lesson.mvp.ui.fragment.TabChildFragment;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class TabAdapter extends FragmentStatePagerAdapter {

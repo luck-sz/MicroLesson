@@ -1,9 +1,6 @@
 package com.example.lesson.mvp.contract;
 
-import com.example.lesson.app.data.entity.CategoryBean;
 import com.example.lesson.app.data.entity.RecommendBean;
-import com.example.lesson.app.data.entity.TagSuccessBean;
-import com.example.lesson.mvp.ui.adapter.RecommendMultipleItemAdapter;
 import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
 

@@ -21,7 +21,6 @@ import com.example.lesson.di.component.DaggerHomeComponent;
 import com.example.lesson.mvp.contract.HomeContract;
 import com.example.lesson.mvp.presenter.HomePresenter;
 import com.example.lesson.mvp.ui.activity.CategoryActivity;
-import com.example.lesson.mvp.ui.adapter.RecommendMultipleItemAdapter;
 import com.example.lesson.mvp.ui.adapter.TabAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.jess.arms.di.component.AppComponent;
@@ -156,7 +155,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
         fragments.add(RecommendFragment.newInstance());
         for (int i = 0; i < bean.getData().getSubTags().size(); i++) {
             mTitles.add(bean.getData().getSubTags().get(i).getTagName());
-            fragments.add(TabChildFragment.newInstance(bean.getData().getSubTags().get(i).getTagId()));
+            fragments.add(LessonFragment.newInstance(bean.getData().getSubTags().get(i).getTagId()));
         }
         adapter = new TabAdapter(getChildFragmentManager(), fragments, mTitles);
         vpContent.setAdapter(adapter);
