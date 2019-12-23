@@ -11,4 +11,5 @@
     <color name="background">#FDFDFD</color>
 
     <color name="text_color">#353F49</color>
+    <color name="serialType_price_color">#F87D41</color>
 </resources>
