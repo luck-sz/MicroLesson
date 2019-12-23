@@ -9,4 +9,17 @@
     <string name="home_account">我的账户</string>
     <!--category-->
     <string name="category_close">关闭</string>
+    <!--我的-->
+    <!--mine-->
+    <string name="user_intro">时光不回头，当下最重要</string>
+    <string name="mine_address">收获地址</string>
+    <string name="mine_download">缓存中心</string>
+    <string name="mine_course">我的重点</string>
+    <string name="mine_order">我的订单</string>
+    <string name="mine_coupon">我的优惠券</string>
+    <string name="mine_group_booking">我的拼团</string>
+    <string name="mine_counsel">在线咨询</string>
+    <string name="mine_service">客服热线</string>
+    <string name="mine_setting">设置</string>
+    <string name="mine_counsel_time">周一至周日 9:00–24:00</string>
 </resources>

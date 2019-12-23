@@ -9,5 +9,6 @@
     <color name="selectColor">#0CB65B</color>
     <color name="unSelectColor">#373C40</color>
     <color name="background">#FDFDFD</color>
-    
+
+    <color name="text_color">#353F49</color>
 </resources>
