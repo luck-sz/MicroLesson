@@ -23,6 +23,8 @@ public class RecommendMultipleItem extends SectionMultiEntity<Object> implements
     private RecommendBean.DataBean.ZhuanlanBean zhuanlanBean;
     // 系列
     private RecommendBean.DataBean.SerialBean serialBean;
+    // 精选
+    private RecommendBean.DataBean.CourseBean courseBean;
 
     public RecommendMultipleItem(int itemType, RecommendBean.DataBean.ZhuanlanBean bean) {
         super(bean);
@@ -33,6 +35,12 @@ public class RecommendMultipleItem extends SectionMultiEntity<Object> implements
     public RecommendMultipleItem(int itemType, RecommendBean.DataBean.SerialBean bean) {
         super(bean);
         this.serialBean = bean;
+        this.itemType = itemType;
+    }
+
+    public RecommendMultipleItem(int itemType, RecommendBean.DataBean.CourseBean bean) {
+        super(bean);
+        this.courseBean = bean;
         this.itemType = itemType;
     }
 
@@ -64,6 +72,14 @@ public class RecommendMultipleItem extends SectionMultiEntity<Object> implements
 
     public void setSerialBean(RecommendBean.DataBean.SerialBean serialBean) {
         this.serialBean = serialBean;
+    }
+
+    public RecommendBean.DataBean.CourseBean getCourseBean() {
+        return courseBean;
+    }
+
+    public void setCourseBean(RecommendBean.DataBean.CourseBean courseBean) {
+        this.courseBean = courseBean;
     }
 
     @Override

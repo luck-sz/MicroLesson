@@ -74,6 +74,10 @@ public class RecommendModel extends BaseModel implements RecommendContract.Model
         for (int i = 0; i < bean.getData().getSerial().size(); i++) {
             list.add(new RecommendMultipleItem(RecommendMultipleItem.SERIES_ITEM, bean.getData().getSerial().get(i)));
         }
+        list.add(new RecommendMultipleItem(RecommendMultipleItem.HEAD_ITEM, true, "精选好课"));
+        for (int i = 0; i < bean.getData().getCourse().size(); i++) {
+            list.add(new RecommendMultipleItem(RecommendMultipleItem.CHOSEN_ITEM, bean.getData().getCourse().get(i)));
+        }
         return list;
     }
 }

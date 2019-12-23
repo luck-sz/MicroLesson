@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.MultipleItemRvAdapter;
 import com.example.lesson.app.data.entity.RecommendMultipleItem;
+import com.example.lesson.mvp.ui.adapter.provide.ChosenProvider;
 import com.example.lesson.mvp.ui.adapter.provide.FamousProvider;
 import com.example.lesson.mvp.ui.adapter.provide.HeadProvider;
 import com.example.lesson.mvp.ui.adapter.provide.SerialProvider;
@@ -45,5 +46,6 @@ public class RecommendMultipleItemAdapter extends MultipleItemRvAdapter<Recommen
         mProviderDelegate.registerProvider(new HeadProvider());
         mProviderDelegate.registerProvider(new FamousProvider());
         mProviderDelegate.registerProvider(new SerialProvider());
+        mProviderDelegate.registerProvider(new ChosenProvider());
     }
 }
