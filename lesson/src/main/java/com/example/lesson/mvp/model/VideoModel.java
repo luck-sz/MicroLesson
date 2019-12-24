@@ -12,7 +12,7 @@ import com.jess.arms.di.scope.FragmentScope;
 
 import javax.inject.Inject;
 
-import com.example.lesson.mvp.contract.MineContract;
+import com.example.lesson.mvp.contract.VideoContract;
 
 import io.reactivex.Observable;
 
@@ -21,7 +21,7 @@ import io.reactivex.Observable;
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 12/17/2019 11:04
+ * Created by MVPArmsTemplate on 12/24/2019 12:00
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -30,14 +30,14 @@ import io.reactivex.Observable;
  * ================================================
  */
 @FragmentScope
-public class MineModel extends BaseModel implements MineContract.Model {
+public class VideoModel extends BaseModel implements VideoContract.Model {
     @Inject
     Gson mGson;
     @Inject
     Application mApplication;
 
     @Inject
-    public MineModel(IRepositoryManager repositoryManager) {
+    public VideoModel(IRepositoryManager repositoryManager) {
         super(repositoryManager);
     }
 
@@ -46,5 +46,11 @@ public class MineModel extends BaseModel implements MineContract.Model {
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public Observable<VideoBean> getVideo() {
+        return mRepositoryManager.obtainRetrofitService(ApiService.class)
+                .getVideo();
     }
 }

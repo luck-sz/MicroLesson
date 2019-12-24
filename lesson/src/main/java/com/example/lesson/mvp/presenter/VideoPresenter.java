@@ -2,7 +2,10 @@ package com.example.lesson.mvp.presenter;
 
 import android.app.Application;
 
+import com.example.lesson.R;
+import com.example.lesson.app.data.entity.RecommendBean;
 import com.example.lesson.app.data.entity.VideoBean;
+import com.example.lesson.mvp.ui.adapter.Videodapter;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.mvp.BasePresenter;
@@ -16,7 +19,7 @@ import timber.log.Timber;
 
 import javax.inject.Inject;
 
-import com.example.lesson.mvp.contract.MineContract;
+import com.example.lesson.mvp.contract.VideoContract;
 import com.jess.arms.utils.RxLifecycleUtils;
 
 import java.util.List;
@@ -26,7 +29,7 @@ import java.util.List;
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 12/17/2019 11:04
+ * Created by MVPArmsTemplate on 12/24/2019 12:00
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -35,7 +38,7 @@ import java.util.List;
  * ================================================
  */
 @FragmentScope
-public class MinePresenter extends BasePresenter<MineContract.Model, MineContract.View> {
+public class VideoPresenter extends BasePresenter<VideoContract.Model, VideoContract.View> {
     @Inject
     RxErrorHandler mErrorHandler;
     @Inject
@@ -44,9 +47,10 @@ public class MinePresenter extends BasePresenter<MineContract.Model, MineContrac
     ImageLoader mImageLoader;
     @Inject
     AppManager mAppManager;
+    Videodapter videodapter;
 
     @Inject
-    public MinePresenter(MineContract.Model model, MineContract.View rootView) {
+    public VideoPresenter(VideoContract.Model model, VideoContract.View rootView) {
         super(model, rootView);
     }
 
@@ -59,7 +63,30 @@ public class MinePresenter extends BasePresenter<MineContract.Model, MineContrac
         this.mApplication = null;
     }
 
-    public void initTabTitle(List<String> list) {
-        mRootView.setTabTitle(list);
+    public void getVideo() {
+        mModel.getVideo()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    mRootView.showLoading();
+                })
+                .doFinally(() -> {
+                    mRootView.hideLoading();
+                })
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<VideoBean>(mErrorHandler) {
+                    @Override
+                    public void onNext(VideoBean videoBean) {
+                        setAdapter(videoBean.getData().getVideo());
+                    }
+                });
+    }
+
+    private void setAdapter(List<VideoBean.DataBean.PlayerBean> list) {
+        if (videodapter == null) {
+            videodapter = new Videodapter(R.layout.item_video, list);
+        }
+        videodapter.setNewData(list);
+        mRootView.setAdapter(videodapter);
     }
 }

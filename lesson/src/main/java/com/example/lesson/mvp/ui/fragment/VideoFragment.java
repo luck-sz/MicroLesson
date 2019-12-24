@@ -4,23 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.lesson.R;
 import com.example.lesson.app.base.MySupportFragment;
-import com.example.lesson.di.component.DaggerMineComponent;
-import com.example.lesson.mvp.contract.MineContract;
-import com.example.lesson.mvp.presenter.MinePresenter;
-import com.example.lesson.mvp.ui.adapter.TabMineAdapter;
-import com.flyco.tablayout.SlidingTabLayout;
+import com.example.lesson.di.component.DaggerVideoComponent;
+import com.example.lesson.mvp.contract.VideoContract;
+import com.example.lesson.mvp.presenter.VideoPresenter;
+import com.example.lesson.mvp.ui.adapter.Videodapter;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +31,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 12/17/2019 11:04
+ * Created by MVPArmsTemplate on 12/24/2019 12:00
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -41,22 +39,21 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
  * ================================================
  */
-public class MineFragment extends MySupportFragment<MinePresenter> implements MineContract.View {
+public class VideoFragment extends MySupportFragment<VideoPresenter> implements VideoContract.View {
 
-    @BindView(R.id.tab_mine)
-    SlidingTabLayout tabMine;
-    @BindView(R.id.vp_content)
-    ViewPager vpContent;
-    TabMineAdapter tabMineAdapter;
+    @BindView(R.id.rv_video)
+    RecyclerView rvVideo;
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout refreshLayout;
 
-    public static MineFragment newInstance() {
-        MineFragment fragment = new MineFragment();
+    public static VideoFragment newInstance() {
+        VideoFragment fragment = new VideoFragment();
         return fragment;
     }
 
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
-        DaggerMineComponent //如找不到该类,请编译一下项目
+        DaggerVideoComponent //如找不到该类,请编译一下项目
                 .builder()
                 .appComponent(appComponent)
                 .view(this)
@@ -66,17 +63,12 @@ public class MineFragment extends MySupportFragment<MinePresenter> implements Mi
 
     @Override
     public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_mine, container, false);
+        return inflater.inflate(R.layout.fragment_video, container, false);
     }
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        List<String> tabs = new ArrayList<>();
-        tabs.add("全部课");
-        tabs.add("付费课");
-        tabs.add("公开课");
-        tabs.add("过期课");
-        mPresenter.initTabTitle(tabs);
+        initRefreshLayout();
     }
 
     @Override
@@ -86,12 +78,12 @@ public class MineFragment extends MySupportFragment<MinePresenter> implements Mi
 
     @Override
     public void showLoading() {
-
+        refreshLayout.setRefreshing(true);
     }
 
     @Override
     public void hideLoading() {
-
+        refreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -114,14 +106,19 @@ public class MineFragment extends MySupportFragment<MinePresenter> implements Mi
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
+        mPresenter.getVideo();
     }
 
     @Override
-    public void setTabTitle(List<String> list) {
-        tabMineAdapter = new TabMineAdapter(getChildFragmentManager(), list);
-        vpContent.setAdapter(tabMineAdapter);
-        tabMine.setViewPager(vpContent);
-        tabMine.setCurrentTab(0);
+    public void setAdapter(Videodapter adapter) {
+        rvVideo.setLayoutManager(new LinearLayoutManager(mContext));
+        rvVideo.setAdapter(adapter);
     }
 
+    private void initRefreshLayout() {
+        refreshLayout.setColorSchemeColors(ArmsUtils.getColor(_mActivity, R.color.unSelectColor));
+        refreshLayout.setOnRefreshListener(() -> {
+            mPresenter.getVideo();
+        });
+    }
 }

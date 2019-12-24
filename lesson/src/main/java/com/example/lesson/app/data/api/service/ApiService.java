@@ -4,6 +4,7 @@ import com.example.lesson.app.data.entity.CategoryBean;
 import com.example.lesson.app.data.entity.LessonBean;
 import com.example.lesson.app.data.entity.RecommendBean;
 import com.example.lesson.app.data.entity.TagSuccessBean;
+import com.example.lesson.app.data.entity.VideoBean;
 
 import java.util.List;
 
@@ -38,11 +39,9 @@ public interface ApiService {
     Observable<LessonBean> getLesson(@Query("tag") String tag);
 
     /**
-     * 获取头像，名字
-     */
-
-    /**
      * 获取视频流
      */
+    @GET("/course3/api/content/video?api_ver=2.0&rank=0&keyfrom=course.3.2.4.android&model=MI_6&mid=8.0.0&imei=866822031582307&vendor=xiaomi&screen=1080x1920&abtest=6&Mkt1st=xiaomi&Mkt=xiaomi&Pdt=mCourse.android")
+    Observable<VideoBean> getVideo();
 
 }

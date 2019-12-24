@@ -93,8 +93,8 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     public void initData(@Nullable Bundle savedInstanceState) {
         initToolBar();
         numbers = new ArrayList<>();
-        numbers.add(430);
-        numbers.add(1068);
+        numbers.add(432);
+        numbers.add(1228);
         mPresenter.changeState(numbers);
     }
 
