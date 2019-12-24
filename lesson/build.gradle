@@ -74,6 +74,9 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:4.1.0'
     // 圆形头像
     implementation 'de.hdodenhof:circleimageview:3.0.1'
+    // 布局状态
+    implementation 'com.github.nukc.stateview:library:1.5.4'
+
 
     //tools
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]

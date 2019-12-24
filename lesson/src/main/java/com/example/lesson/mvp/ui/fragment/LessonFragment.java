@@ -17,6 +17,7 @@ import com.example.lesson.app.data.entity.LessonBean;
 import com.example.lesson.mvp.contract.LessonContract;
 import com.example.lesson.mvp.ui.adapter.LessonMultipleItemAdapter;
 import com.example.lesson.mvp.ui.view.BannerViewHolder;
+import com.github.nukc.stateview.StateView;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 
@@ -58,6 +59,9 @@ public class LessonFragment extends MySupportFragment<LessonPresenter> implement
     String tagId;
     View mBannerView;
     MZBannerView mMyBanner;
+    StateView stateView;
+    View mFooterView;
+    View mEmptyView;
     View view;
 
     public static LessonFragment newInstance(String tagId) {
@@ -86,7 +90,7 @@ public class LessonFragment extends MySupportFragment<LessonPresenter> implement
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        initBannerView();
+        initView();
         if (getArguments() != null) {
             tagId = getArguments().getString("tagId");
             if (!tagId.equals("") && mPresenter != null) {
@@ -169,6 +173,19 @@ public class LessonFragment extends MySupportFragment<LessonPresenter> implement
     }
 
     @Override
+    public void addFooter(LessonMultipleItemAdapter adapter) {
+        if (adapter.getFooterLayoutCount() < 1) {
+            adapter.addFooterView(mFooterView);
+        }
+    }
+
+    @Override
+    public void setEmpty(LessonMultipleItemAdapter adapter) {
+        stateView.showEmpty();
+        adapter.setEmptyView(mEmptyView);
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         mMyBanner.pause();//暂停轮播
@@ -194,8 +211,14 @@ public class LessonFragment extends MySupportFragment<LessonPresenter> implement
         });
     }
 
-    private void initBannerView() {
+    private void initView() {
+        // Banner
         mBannerView = getLayoutInflater().inflate(R.layout.layout_banner, null, false);
         mMyBanner = mBannerView.findViewById(R.id.banner);
+        // 暂无更多
+        mFooterView = getLayoutInflater().inflate(R.layout.layout_item_footer, null, false);
+        // 空布局
+        mEmptyView = getLayoutInflater().inflate(R.layout.layout_empty, null, false);
+        stateView = mEmptyView.findViewById(R.id.stateView);
     }
 }

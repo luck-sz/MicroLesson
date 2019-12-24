@@ -37,6 +37,12 @@ public interface LessonContract {
 
         // 设置课程内容
         void setContent(LessonMultipleItemAdapter adapter);
+
+        // 添加底部
+        void addFooter(LessonMultipleItemAdapter adapter);
+
+        // 设置空布局
+        void setEmpty(LessonMultipleItemAdapter adapter);
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存

@@ -9,7 +9,8 @@
     <string name="home_account">我的账户</string>
     <!--category-->
     <string name="category_close">关闭</string>
-    <!--我的-->
+    <!--footer-->
+    <string name="footer">一 暂无更多数据 一</string>
     <!--mine-->
     <string name="user_intro">时光不回头，当下最重要</string>
     <string name="mine_address">收获地址</string>

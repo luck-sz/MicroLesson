@@ -57,6 +57,7 @@ public class RecommendFragment extends MySupportFragment<RecommendPresenter> imp
 
     View view;
     View mBannerView;
+    View mFooterView;
     MZBannerView mMyBanner;
 
     public static RecommendFragment newInstance() {
@@ -83,7 +84,7 @@ public class RecommendFragment extends MySupportFragment<RecommendPresenter> imp
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         initRefreshLayout();
-        initBannerView();
+        initView();
         mPresenter.initAdapter();
     }
 
@@ -169,6 +170,13 @@ public class RecommendFragment extends MySupportFragment<RecommendPresenter> imp
     }
 
     @Override
+    public void addFooter(RecommendMultipleItemAdapter adapter) {
+        if (adapter.getFooterLayoutCount() < 1) {
+            adapter.addFooterView(mFooterView);
+        }
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         view = null;
@@ -182,8 +190,11 @@ public class RecommendFragment extends MySupportFragment<RecommendPresenter> imp
         });
     }
 
-    private void initBannerView() {
+    private void initView() {
+        // Banner
         mBannerView = getLayoutInflater().inflate(R.layout.layout_banner, null, false);
         mMyBanner = mBannerView.findViewById(R.id.banner);
+        // 暂无更多
+        mFooterView = getLayoutInflater().inflate(R.layout.layout_item_footer, null, false);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.lesson.mvp.presenter;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.example.lesson.app.data.entity.RecommendBean;
 import com.example.lesson.app.data.entity.RecommendMultipleItem;
@@ -99,7 +100,10 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.Model, R
     private void setAdapter(List<RecommendMultipleItem> list) {
         if (adapter == null) {
             adapter = new RecommendMultipleItemAdapter(list);
-            mRootView.addBanner(adapter);
+            if (list.size() > 0) {
+                mRootView.addBanner(adapter);
+                mRootView.addFooter(adapter);
+            }
         }
         adapter.setNewData(list);
         mRootView.setContent(adapter);

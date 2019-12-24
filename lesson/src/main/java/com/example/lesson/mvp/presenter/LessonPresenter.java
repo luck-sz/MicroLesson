@@ -93,7 +93,12 @@ public class LessonPresenter extends BasePresenter<LessonContract.Model, LessonC
     private void setAdapter(List<LessonMultipleItem> list) {
         if (adapter == null) {
             adapter = new LessonMultipleItemAdapter(list);
-            mRootView.addBanner(adapter);
+            if (list.size() > 0) {
+                mRootView.addBanner(adapter);
+                mRootView.addFooter(adapter);
+            } else {
+                mRootView.setEmpty(adapter);
+            }
         }
         adapter.setNewData(list);
         mRootView.setContent(adapter);
