@@ -23,6 +23,7 @@ import com.jess.arms.utils.ArmsUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportFragment;
+import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -62,6 +63,7 @@ public class MainActivity extends MySupportActivity<MainPresenter> implements Ma
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        Timber.d("输出日志");
         // 初始化状态栏
         initStatusBar();
         // 初始化fragment

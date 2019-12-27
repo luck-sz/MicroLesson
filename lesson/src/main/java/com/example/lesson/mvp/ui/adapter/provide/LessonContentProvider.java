@@ -1,9 +1,12 @@
 package com.example.lesson.mvp.ui.adapter.provide;
 
+import android.content.Intent;
+
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.provider.BaseItemProvider;
 import com.example.lesson.R;
 import com.example.lesson.app.data.entity.LessonMultipleItem;
+import com.example.lesson.mvp.ui.activity.DetailActivity;
 import com.example.lesson.mvp.ui.adapter.LessonMultipleItemAdapter;
 import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
@@ -56,4 +59,12 @@ public class LessonContentProvider extends BaseItemProvider<LessonMultipleItem, 
         }
     }
 
+    @Override
+    public void onClick(BaseViewHolder helper, LessonMultipleItem data, int position) {
+        super.onClick(helper, data, position);
+        Intent intent = new Intent(mContext, DetailActivity.class);
+        intent.putExtra(DetailActivity.PARAM_TITLE, data.getBean().getCourseTitle());
+        intent.putExtra(DetailActivity.PARAM_URL, data.getBean().getUrl());
+        mContext.startActivity(intent);
+    }
 }

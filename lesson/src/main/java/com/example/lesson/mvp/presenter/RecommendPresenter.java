@@ -2,7 +2,10 @@ package com.example.lesson.mvp.presenter;
 
 import android.app.Application;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.lesson.app.data.entity.RecommendBean;
 import com.example.lesson.app.data.entity.RecommendMultipleItem;
 import com.example.lesson.mvp.ui.adapter.RecommendMultipleItemAdapter;
@@ -49,7 +52,7 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.Model, R
     @Inject
     AppManager mAppManager;
 
-    RecommendMultipleItemAdapter adapter;
+    RecommendMultipleItemAdapter mAdapter;
     List<RecommendMultipleItem> list;
 
     @Inject
@@ -65,7 +68,7 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.Model, R
         this.mAppManager = null;
         this.mImageLoader = null;
         this.mApplication = null;
-        this.adapter = null;
+        this.mAdapter = null;
         this.list = null;
     }
 
@@ -98,14 +101,14 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.Model, R
     }
 
     private void setAdapter(List<RecommendMultipleItem> list) {
-        if (adapter == null) {
-            adapter = new RecommendMultipleItemAdapter(list);
+        if (mAdapter == null) {
+            mAdapter = new RecommendMultipleItemAdapter(list);
             if (list.size() > 0) {
-                mRootView.addBanner(adapter);
-                mRootView.addFooter(adapter);
+                mRootView.addBanner(mAdapter);
+                mRootView.addFooter(mAdapter);
             }
         }
-        adapter.setNewData(list);
-        mRootView.setContent(adapter);
+        mAdapter.setNewData(list);
+        mRootView.setContent(mAdapter);
     }
 }

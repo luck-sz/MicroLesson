@@ -1,9 +1,12 @@
 package com.example.lesson.mvp.ui.adapter.provide;
 
+import android.content.Intent;
+
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.provider.BaseItemProvider;
 import com.example.lesson.R;
 import com.example.lesson.app.data.entity.RecommendMultipleItem;
+import com.example.lesson.mvp.ui.activity.DetailActivity;
 import com.example.lesson.mvp.ui.adapter.RecommendMultipleItemAdapter;
 import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
@@ -58,4 +61,12 @@ public class ChosenProvider extends BaseItemProvider<RecommendMultipleItem, Base
 
     }
 
+    @Override
+    public void onClick(BaseViewHolder helper, RecommendMultipleItem data, int position) {
+        super.onClick(helper, data, position);
+        Intent intent = new Intent(mContext, DetailActivity.class);
+        intent.putExtra(DetailActivity.PARAM_TITLE, data.getCourseBean().getCourseTitle());
+        intent.putExtra(DetailActivity.PARAM_URL, data.getCourseBean().getUrl());
+        mContext.startActivity(intent);
+    }
 }

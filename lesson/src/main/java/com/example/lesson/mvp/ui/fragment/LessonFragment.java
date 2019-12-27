@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.lesson.app.base.MySupportFragment;
 import com.example.lesson.app.data.entity.LessonBean;
 import com.example.lesson.mvp.contract.LessonContract;
+import com.example.lesson.mvp.ui.activity.DetailActivity;
 import com.example.lesson.mvp.ui.adapter.LessonMultipleItemAdapter;
 import com.example.lesson.mvp.ui.view.BannerViewHolder;
 import com.github.nukc.stateview.StateView;
@@ -147,7 +148,10 @@ public class LessonFragment extends MySupportFragment<LessonPresenter> implement
         mMyBanner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
             @Override
             public void onPageClick(View view, int position) {
-                showMessage("当前位置:" + position);
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra(DetailActivity.PARAM_TITLE, list.get(position).getTitle());
+                intent.putExtra(DetailActivity.PARAM_URL, list.get(position).getUrl());
+                launchActivity(intent);
             }
         });
         mMyBanner.setPages(url, new MZHolderCreator<BannerViewHolder>() {

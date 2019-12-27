@@ -17,9 +17,9 @@ import com.example.lesson.app.data.entity.RecommendBean;
 import com.example.lesson.di.component.DaggerRecommendComponent;
 import com.example.lesson.mvp.contract.RecommendContract;
 import com.example.lesson.mvp.presenter.RecommendPresenter;
+import com.example.lesson.mvp.ui.activity.DetailActivity;
 import com.example.lesson.mvp.ui.adapter.RecommendMultipleItemAdapter;
 import com.example.lesson.mvp.ui.view.BannerViewHolder;
-import com.example.lesson.mvp.ui.view.RecycleViewDivider;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.zhouwei.mzbanner.MZBannerView;
@@ -29,9 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -132,7 +129,10 @@ public class RecommendFragment extends MySupportFragment<RecommendPresenter> imp
         mMyBanner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
             @Override
             public void onPageClick(View view, int position) {
-                showMessage("当前位置:" + position);
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra(DetailActivity.PARAM_TITLE, list.get(position).getTitle());
+                intent.putExtra(DetailActivity.PARAM_URL, list.get(position).getUrl());
+                launchActivity(intent);
             }
         });
         mMyBanner.setPages(url, new MZHolderCreator<BannerViewHolder>() {
