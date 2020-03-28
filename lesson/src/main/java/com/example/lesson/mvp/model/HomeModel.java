@@ -15,12 +15,17 @@ import com.jess.arms.di.scope.FragmentScope;
 import javax.inject.Inject;
 
 import com.example.lesson.mvp.contract.HomeContract;
+import com.vondear.rxtool.RxSPTool;
 
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import timber.log.Timber;
 
 
 /**
@@ -55,20 +60,47 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
     }
 
     @Override
-    public Observable<RecommendBean> getRecommend(List<Integer> list) {
-
-        return mRepositoryManager.obtainRetrofitService(ApiService.class)
+    public Observable<RecommendBean> getRecommend(List<Integer> list, boolean isRefresh) {
+        // 每次获取最新数据
+        Observable<RecommendBean> mNet = mRepositoryManager.obtainRetrofitService(ApiService.class)
                 .changeState(list)
                 .flatMap(new Function<TagSuccessBean, ObservableSource<RecommendBean>>() {
                     @Override
                     public ObservableSource<RecommendBean> apply(TagSuccessBean tagSuccessBean) throws Exception {
                         if (tagSuccessBean.getCode().equals("0")) {
                             return mRepositoryManager.obtainRetrofitService(ApiService.class)
-                                    .getRecommend();
+                                    .getRecommend()
+                                    .doAfterNext(new Consumer<RecommendBean>() {
+                                        @Override
+                                        public void accept(RecommendBean recommendBean) throws Exception {
+                                            // 在这里保存数据
+                                            RxSPTool.putJSONCache(mApplication, "recommend", mGson.toJson(recommendBean));
+                                        }
+                                    });
                         } else {
                             return null;
                         }
                     }
                 });
+        // 加载本地数据
+        Observable<RecommendBean> mCache = Observable.create(new ObservableOnSubscribe<RecommendBean>() {
+            @Override
+            public void subscribe(ObservableEmitter<RecommendBean> emitter) throws Exception {
+                String data = RxSPTool.readJSONCache(mApplication, "recommend");
+                RecommendBean bean = mGson.fromJson(data, RecommendBean.class);
+                if (bean != null) {  // 判断本地数据是否为空
+                    emitter.onNext(bean);
+                } else {
+                    emitter.onComplete();
+                }
+            }
+        });
+
+        if (isRefresh) {
+            return mNet;
+        } else {
+            return Observable.concat(mCache, mNet);
+        }
     }
+
 }

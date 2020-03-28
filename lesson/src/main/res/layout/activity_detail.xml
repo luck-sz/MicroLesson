@@ -51,17 +51,10 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
+    <LinearLayout
+        android:id="@+id/web_view_content"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_gravity="top"
-        android:progressDrawable="@drawable/progress_style" />
-
-    <WebView
-        android:id="@+id/webView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
 
 </LinearLayout>

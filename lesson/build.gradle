@@ -80,6 +80,10 @@ dependencies {
     implementation 'com.android.support:cardview-v7:28.0.0'
     // 腾讯WebView
     implementation 'com.tencent.sonic:sdk:3.1.0'
+    // 基础工具库
+    implementation "com.github.tamsiree.RxTool:RxKit:2.3.9"
+    // WebView
+    implementation 'com.just.agentweb:agentweb:4.1.3'
 
     //tools
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]

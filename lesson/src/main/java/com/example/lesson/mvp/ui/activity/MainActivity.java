@@ -63,7 +63,6 @@ public class MainActivity extends MySupportActivity<MainPresenter> implements Ma
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        Timber.d("输出日志");
         // 初始化状态栏
         initStatusBar();
         // 初始化fragment
@@ -125,6 +124,7 @@ public class MainActivity extends MySupportActivity<MainPresenter> implements Ma
     }
 
     private void initBottomNav() {
+        bottomNav.enableAnimation(false);
         bottomNav.setCurrentItem(0);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

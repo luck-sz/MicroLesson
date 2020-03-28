@@ -22,9 +22,11 @@ import com.example.lesson.mvp.contract.HomeContract;
 import com.example.lesson.mvp.presenter.HomePresenter;
 import com.example.lesson.mvp.ui.activity.CategoryActivity;
 import com.example.lesson.mvp.ui.adapter.TabAdapter;
+import com.example.lesson.mvp.ui.view.NoAnimationViewPager;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
+import com.vondear.rxtool.RxSPTool;
 
 import org.simple.eventbus.Subscriber;
 
@@ -36,19 +38,6 @@ import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
-
-/**
- * ================================================
- * Description:
- * <p>
- * Created by MVPArmsTemplate on 12/17/2019 10:22
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms/wiki">See me</a>
- * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
- * ================================================
- */
 public class HomeFragment extends MySupportFragment<HomePresenter> implements HomeContract.View {
 
     @BindView(R.id.toolbar)
@@ -56,7 +45,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
     @BindView(R.id.tab_home)
     SlidingTabLayout tabHome;
     @BindView(R.id.vp_content)
-    ViewPager vpContent;
+    NoAnimationViewPager vpContent;
     @BindView(R.id.toolbar_text)
     TextView mTitle;
     @BindView(R.id.ll_choose)
@@ -95,7 +84,7 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
         numbers = new ArrayList<>();
         numbers.add(432);
         numbers.add(1228);
-        mPresenter.changeState(numbers);
+        mPresenter.changeState(numbers, false);
     }
 
     @Override
@@ -163,13 +152,16 @@ public class HomeFragment extends MySupportFragment<HomePresenter> implements Ho
         vpContent.setAdapter(adapter);
         // 设置tab选项卡的默认选项
         tabHome.setViewPager(vpContent);
+        tabHome.setOnClickListener(v ->
+                vpContent.setCurrentItem(tabHome.getCurrentTab())
+        );
         tabHome.setCurrentTab(0);
     }
 
     @Subscriber(tag = "ChangeTag")
     public void changTag(ChangeTag changeTag) {
         tabHome.setCurrentTab(0);
-        mPresenter.changeState(changeTag.getList());
+        mPresenter.changeState(changeTag.getList(), true);
     }
 
     @Override

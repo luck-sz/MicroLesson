@@ -36,6 +36,6 @@ public interface HomeContract {
     interface Model extends IModel {
 
         // 先改变学习阶段然后获取精选内容
-        Observable<RecommendBean> getRecommend(List<Integer> list);
+        Observable<RecommendBean> getRecommend(List<Integer> list, boolean isFirst);
     }
 }

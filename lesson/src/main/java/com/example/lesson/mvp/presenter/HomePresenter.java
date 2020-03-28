@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.lesson.app.data.entity.CategoryBean;
 import com.example.lesson.app.data.entity.RecommendBean;
 import com.example.lesson.app.data.entity.TagSuccessBean;
+import com.google.gson.Gson;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.mvp.BasePresenter;
@@ -21,6 +22,7 @@ import javax.inject.Inject;
 
 import com.example.lesson.mvp.contract.HomeContract;
 import com.jess.arms.utils.RxLifecycleUtils;
+import com.vondear.rxtool.RxSPTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,8 +65,8 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
         this.mApplication = null;
     }
 
-    public void changeState(List<Integer> list) {
-        mModel.getRecommend(list)
+    public void changeState(List<Integer> list, boolean isRefresh) {
+        mModel.getRecommend(list, isRefresh)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
