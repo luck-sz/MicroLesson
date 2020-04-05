@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.lesson.R;
 import com.example.lesson.app.base.MySupportFragment;
+import com.example.lesson.app.eventbus.ChangeTag;
 import com.example.lesson.di.component.DaggerVideoComponent;
 import com.example.lesson.mvp.contract.VideoContract;
 import com.example.lesson.mvp.presenter.VideoPresenter;
@@ -20,25 +21,15 @@ import com.example.lesson.mvp.ui.adapter.Videodapter;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 
+import org.simple.eventbus.Subscriber;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
-
-/**
- * ================================================
- * Description:
- * <p>
- * Created by MVPArmsTemplate on 12/24/2019 12:00
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms/wiki">See me</a>
- * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
- * ================================================
- */
 public class VideoFragment extends MySupportFragment<VideoPresenter> implements VideoContract.View {
 
     @BindView(R.id.rv_video)
@@ -117,8 +108,7 @@ public class VideoFragment extends MySupportFragment<VideoPresenter> implements 
 
     private void initRefreshLayout() {
         refreshLayout.setColorSchemeColors(ArmsUtils.getColor(_mActivity, R.color.unSelectColor));
-        refreshLayout.setOnRefreshListener(() -> {
-            mPresenter.getVideo();
-        });
+        refreshLayout.setOnRefreshListener(() -> mPresenter.getVideo());
     }
+
 }

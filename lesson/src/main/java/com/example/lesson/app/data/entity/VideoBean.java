@@ -1,5 +1,6 @@
 package com.example.lesson.app.data.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class VideoBean {
@@ -49,7 +50,7 @@ public class VideoBean {
             this.video = video;
         }
 
-        public static class PlayerBean {
+        public static class PlayerBean implements Serializable {
             /**
              * img : https://oimagea6.ydstatic.com/image?id=4481142214880642818&product=xue
              * tagId : 432

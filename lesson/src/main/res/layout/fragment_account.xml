@@ -32,7 +32,7 @@
                     android:lineSpacingMultiplier="1.5"
                     android:maxEms="5"
                     android:singleLine="true"
-                    android:text="覃德文"
+                    android:text="阿尔托莉雅"
                     android:textColor="#353F49"
                     android:textSize="24sp"
                     android:textStyle="bold"

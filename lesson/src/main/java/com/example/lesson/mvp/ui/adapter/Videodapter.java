@@ -18,6 +18,7 @@ public class Videodapter extends BaseQuickAdapter<VideoBean.DataBean.PlayerBean,
 
     @Override
     protected void convert(BaseViewHolder helper, VideoBean.DataBean.PlayerBean playerBean) {
+        helper.addOnClickListener(R.id.fab);
         // 视频标题
         helper.setText(R.id.tv_video_title, playerBean.getTitle());
         // 视频封面

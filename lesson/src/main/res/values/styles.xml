@@ -21,4 +21,9 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@android:color/white</item>
     </style>
+
+    <style name="dialog_style" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>

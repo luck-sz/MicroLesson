@@ -1,10 +1,17 @@
 package com.example.lesson.mvp.presenter;
 
 import android.app.Application;
+import android.content.Intent;
+import android.view.View;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.lesson.R;
 import com.example.lesson.app.data.entity.RecommendBean;
 import com.example.lesson.app.data.entity.VideoBean;
+import com.example.lesson.mvp.ui.activity.DetailActivity;
+import com.example.lesson.mvp.ui.activity.PlayerActivity;
 import com.example.lesson.mvp.ui.adapter.Videodapter;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.FragmentScope;
@@ -86,7 +93,18 @@ public class VideoPresenter extends BasePresenter<VideoContract.Model, VideoCont
         if (videodapter == null) {
             videodapter = new Videodapter(R.layout.item_video, list);
         }
-        videodapter.setNewData(list);
         mRootView.setAdapter(videodapter);
+        videodapter.setNewData(list);
+        videodapter.setOnItemClickListener((adapter, view, position) -> {
+            Intent intent = new Intent(mApplication, DetailActivity.class);
+            intent.putExtra(DetailActivity.PARAM_TITLE, list.get(position).getTitle());
+            intent.putExtra(DetailActivity.PARAM_URL, list.get(position).getUrl());
+            mRootView.launchActivity(intent);
+        });
+        videodapter.setOnItemChildClickListener((adapter, view, position) -> {
+            Intent intent = new Intent(mApplication, PlayerActivity.class);
+            intent.putExtra("PlayBean", list.get(position));
+            mRootView.launchActivity(intent);
+        });
     }
 }
